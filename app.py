@@ -3,7 +3,7 @@ import sqlite3  # Ou use outro banco de dados, como PostgreSQL
 from flask_cors import CORS, cross_origin  # Importando o CORS
 
 app = Flask(__name__)
-cors = CORS(app)
+CORS(app, resources={r"/api/*": {"origins": "*"}})  # Permite todas as origens para as rotas que começam com /api/
 
 app.config['CORS_HEADERS'] = 'Content-Type'
 
