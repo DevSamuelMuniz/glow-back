@@ -1,23 +1,20 @@
 from flask import Flask, request, jsonify
-import sqlite3  # Ou use outro banco de dados, como PostgreSQL
-from flask_cors import CORS, cross_origin  # Importando o CORS
+import sqlite3
+from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "*"}})  # Permite todas as origens para as rotas que começam com /api/
-
-app.config['CORS_HEADERS'] = 'Content-Type'
+CORS(app, resources={r"/api/*": {"origins": ["http://127.0.0.1:5500"]}})  # Substitua pela origem específica
 
 # Conexão com o banco de dados
 def get_db_connection():
-    conn = sqlite3.connect('database.db')  # Altere para o nome do seu banco
+    conn = sqlite3.connect('database.db')
     conn.row_factory = sqlite3.Row
     return conn
 
 # Rota para agendar
 @app.route('/api/agendar', methods=['POST'])
-@cross_origin()
 def agendar():
-    data = request.get_json()  # Recebe dados JSON
+    data = request.get_json()
     nome = data.get('nome')
     telefone = data.get('telefone')
     email = data.get('email')
@@ -25,12 +22,10 @@ def agendar():
     data_agenda = data.get('data_agenda')
     horario = data.get('horario')
 
-    # Conexão e inserção no banco
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute('''INSERT INTO agendamentos (nome, telefone, email, servico, data_agenda, horario)
-                      VALUES (?, ?, ?, ?, ?, ?)''',
-                   (nome, telefone, email, servico, data_agenda, horario))
+                      VALUES (?, ?, ?, ?, ?, ?)''', (nome, telefone, email, servico, data_agenda, horario))
     conn.commit()
     conn.close()
 
