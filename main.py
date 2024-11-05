@@ -3,7 +3,7 @@ from pymongo import MongoClient
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": ["http://127.0.0.1:5500"]}})  # Substitua pela origem específica
+CORS(app, resources={r"/api/*": {"origins": ["0.0.0.0"]}})  # Substitua pela origem específica
 
 # Conexão com o MongoDB Atlas
 client = MongoClient('mongodb+srv://recinproj:NRdhqU14UA14vJF5@cluster0.r8fkm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
