@@ -1,9 +1,9 @@
 from flask import Flask, request, jsonify
 from pymongo import MongoClient
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": ["https://glowtime.netlify.app/"]}})  # Substitua pela origem específica
+CORS(app, resources={r"/api/*": {"origins": ["https://glowtime.netlify.app"]}})  # Substitua pela origem específica
 
 # Conexão com o MongoDB Atlas
 client = MongoClient('mongodb+srv://recinproj:NRdhqU14UA14vJF5@cluster0.r8fkm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
@@ -12,6 +12,7 @@ agendamentos_collection = db.agendamentos  # Nome da coleção
 
 # Rota para agendar
 @app.route('/api/agendar', methods=['POST'])
+@cross_origin()
 def agendar():
     data = request.get_json()
     nome = data.get('nome')
