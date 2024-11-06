@@ -39,9 +39,11 @@ def agendar():
     return jsonify({'message': 'Agendamento criado com sucesso!'}), 201
 
 
-# @app.router('/api/gerenciamento', methods=['GET'])
-# @cross_origin()
-# def receberGerenciamento():
+@app.route('/api/gerenciamento', methods=['GET'])
+@cross_origin()
+def receberGerenciamento():
+    agendamentos = list(agendamentos_collection.find({}, {'_id': 0})) 
+    return jsonify(agendamentos), 200
     
 
 if __name__ == '__main__':
