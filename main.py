@@ -3,7 +3,7 @@ from pymongo import MongoClient
 from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": ["https://glowtime.netlify.app"]}})  # Substitua pela origem específica
+CORS(app, resources={r"/api/*": {"origins": ["https://senacglowtime.netlify.app"]}})  # Substitua pela origem específica
 
 # Conexão com o MongoDB Atlas
 client = MongoClient('mongodb+srv://recinproj:NRdhqU14UA14vJF5@cluster0.r8fkm.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
@@ -37,6 +37,12 @@ def agendar():
     agendamentos_collection.insert_one(agendamento)
 
     return jsonify({'message': 'Agendamento criado com sucesso!'}), 201
+
+
+# @app.router('/api/gerenciamento', methods=['GET'])
+# @cross_origin()
+# def receberGerenciamento():
+    
 
 if __name__ == '__main__':
     # Pega a porta da variável de ambiente PORT ou usa 5000 como padrão
